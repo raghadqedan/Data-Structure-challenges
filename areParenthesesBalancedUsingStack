@@ -1,0 +1,40 @@
+bool areParenthesesBalanced(String input) {
+  Stack<String> stack = Stack<String>();
+
+  for (var char in input.split('')) {
+    if (char == '(' || char == '[' || char == '{') {
+      stack.push(char);
+    } else if (char == ')' || char == ']' || char == '}') {
+      if (stack.isEmpty || !isMatchingPair(stack.pop(), char)) {
+        return false;
+      }
+    }
+  }
+
+  return stack.isEmpty;
+}
+
+bool isMatchingPair(String opening, String closing) {
+  return (opening == '(' && closing == ')') ||
+         (opening == '[' && closing == ']') ||
+         (opening == '{' && closing == '}');
+}
+
+
+class Stack<E> {
+  Stack() : _storage = <E>[];
+  final List<E> _storage;
+
+  void push(E element) => _storage.add(element);
+
+  E pop() => _storage.removeLast();
+
+  bool get isEmpty => _storage.isEmpty;
+}
+
+void main() {
+  String balanced="{()}";
+  String unBalanced="{(}";
+ print("are Parentheses Balanced ${balanced} ? ${areParenthesesBalanced(balanced)}");
+print("are Parentheses Balanced ${unBalanced} ? ${areParenthesesBalanced(unBalanced)}");
+}
